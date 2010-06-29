@@ -1,0 +1,13 @@
+Local 132
+---
+
+Local 132 is a very generic worker pool implementation.
+
+Getting started:
+    
+    make
+    ./start.sh
+
+Run the tests
+  
+    make test
