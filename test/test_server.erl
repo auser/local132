@@ -2,7 +2,7 @@
 
 -export ([
   start/0,
-  run/1,
+  add/1,
   get_value/1,
   stop/0
 ]).
@@ -12,14 +12,14 @@ start() ->
   register(?MODULE, Pid),
   {ok, Pid}.
   
-run(N) -> whereis(?MODULE) ! {run, N}.
+add(N) -> whereis(?MODULE) ! {add, N}.
 get_value(From)  -> whereis(?MODULE) ! {get_value, From}.
 stop()  -> whereis(?MODULE) ! {stop}.
 
 loop() -> loop(0).
 loop(N) ->
   receive
-    {run, I} ->
+    {add, I} ->
       NewN = N + I,
       loop(NewN);
     {get_value, From} ->

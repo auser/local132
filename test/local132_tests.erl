@@ -31,7 +31,7 @@ simple_queue_tests() ->
 
 lots_of_jobs_tests() ->
   lists:map(fun(N) ->
-    ok = local132:submit_job(fun() -> test_server:run(N) end)
+    ok = local132:submit_job(fun() -> test_server:add(N) end)
   end, lists:seq(1,100)),
   timer:sleep(100),
   test_server:get_value(self()),
