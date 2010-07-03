@@ -32,7 +32,7 @@ start_link(Count) ->
 stop() ->
   lists:foreach(fun({WorkerId, _Pid, _, _}) ->
     supervisor:terminate_child(?MODULE, WorkerId)
-  end, supervisor:which_children(local132_sup)).
+  end, supervisor:which_children(?MODULE)).
   
 %% ===================================================================
 %% Supervisor callbacks

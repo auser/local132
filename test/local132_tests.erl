@@ -24,14 +24,14 @@ starting_test_() ->
   }.
 
 simple_queue_tests() ->
-  ?assert(10 =:= local132:sync_job(fun() -> 10 end)),
-  ?assert(11 =:= local132:sync_job(fun() -> 11 end)),
-  ?assert(90 =/= local132:sync_job(fun() -> 10 end)),
+  ?assert(10 =:= local132:submit_job(fun() -> 10 end)),
+  ?assert(11 =:= local132:submit_job(fun() -> 11 end)),
+  ?assert(90 =/= local132:submit_job(fun() -> 10 end)),
   passed.
 
 lots_of_jobs_tests() ->
   lists:map(fun(N) ->
-    ok = local132:submit_job(fun() -> test_server:add(N) end)
+    ok = local132:async_job(fun() -> test_server:add(N) end)
   end, lists:seq(1,100)),
   timer:sleep(100),
   test_server:get_value(self()),

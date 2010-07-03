@@ -9,7 +9,7 @@
 %% API
 -export([
   submit_job/1, % submit a new job
-  sync_job/1,   % submit a job and wait for the result
+  async_job/1,   % submit a job and wait for the result
   ready/1,      % tell that the worker is ready
   start_link/0  % start the server
 ]).
@@ -35,11 +35,11 @@
 start_link() ->
   gen_server:start_link({local, ?SERVER}, ?MODULE, [], [{timeout, infinity}]).
 
-sync_job(Fun) ->
+submit_job(Fun) ->
   WorkerPid = gen_server:call(?SERVER, next_available, infinity),
   local132_worker:sync_run(WorkerPid, Fun).
 
-submit_job(Fun) ->
+async_job(Fun) ->
   gen_server:cast(?SERVER, {run, Fun}).
 
 ready(WorkerId) ->
